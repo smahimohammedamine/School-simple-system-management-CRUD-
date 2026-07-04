@@ -40,12 +40,17 @@ class StudentController extends Controller
     }
 
     public function update($id,CreateStudentRequest $request){
-        Student::whereId($id)->update($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+            $data['image'] = $filename;
+        }
+
+        Student::whereId($id)->update($data);
         return redirect()->route('students.index')->with('success', 'Student Updated successfuly');
     }
-
-
-
 
     public function destroy($id){
         Student::destroy($id);
