@@ -36,6 +36,9 @@ class StudentController extends Controller
 
     public function edit($id){
         $data = Student::find($id);
+        if(empty($data)){
+            return redirect()->route('students.index')->with('error', 'Sorry we cant load your records');
+        }
         return view('students.edit',['data' =>$data]);
     }
 

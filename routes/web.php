@@ -3,6 +3,7 @@
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,14 @@ Route::post('store_student', [StudentController::class,'store'])->name('students
 Route::get('edit_student/{id}', [StudentController::class,'edit'])->name('students.edit');
 Route::post('update_student/{id}', [StudentController::class,'update'])->name('students.update');
 Route::post('delete_student/{id}', [StudentController::class,'destroy'])->name('students.delete');
+
+//Students training courses
+Route::get('training', [TrainingController::class,'index'])->name('trainings.index');
+Route::get('create_training', [TrainingController::class,'create'])->name('trainings.create');
+Route::post('store_training', [TrainingController::class,'store'])->name('trainings.store');
+Route::get('edit_training/{id}', [TrainingController::class,'edit'])->name('trainings.edit');
+Route::post('update_training/{id}', [TrainingController::class,'update'])->name('trainings.update');
+Route::post('delete_training/{id}', [TrainingController::class,'destroy'])->name('trainings.delete');
 
 
 //This is in the case of route not found
