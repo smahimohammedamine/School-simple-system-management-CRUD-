@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('training_courses_enrollements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('studentId')->references('id')->on('students')->onDelete('cascade');
-            $table->foreignId('trainingId')->references('id')->on('training_courses')->onDelete('cascade');
+            $table->foreignId('trainingCoursesId')->references('id')->on('training_courses')->onDelete('cascade');
+            $table->date('enrolement_date')->comment('the day of registration of the student ');
             $table->timestamps();
         });
     }

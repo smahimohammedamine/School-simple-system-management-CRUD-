@@ -39,6 +39,10 @@ Route::post('store_training', [TrainingController::class,'store'])->name('traini
 Route::get('edit_training/{id}', [TrainingController::class,'edit'])->name('trainings.edit');
 Route::post('update_training/{id}', [TrainingController::class,'update'])->name('trainings.update');
 Route::post('delete_training/{id}', [TrainingController::class,'destroy'])->name('trainings.delete');
+Route::get('detail_training/{id}', [TrainingController::class,'detail'])->name('trainings.detail');
+Route::get('add_student/{id}', [TrainingController::class,'addStudent'])->name('trainings.addStudent');
+Route::post('store_add_student/{id}', [TrainingController::class,'storeAddStudent'])->name('trainings.storeAddStudent');
+Route::post('delete_student_enrollement/{id}', [TrainingController::class,'deleteStudent'])->name('trainings.delete_student_enrollement');
 
 
 //This is in the case of route not found

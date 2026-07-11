@@ -72,6 +72,7 @@
                                         
                                         
                                         <td>
+                                            <a href=" {{ route('trainings.detail', $course->id) }} " class="btn btn-success btn-sm">Studens</a>
                                             <a href=" {{ route('trainings.edit', $course->id) }} " class="btn btn-primary btn-sm">Edit</a>
                                             <form action="{{ route('trainings.delete', $course->id) }}" method="POST" style="display:inline">
                                                 @csrf
