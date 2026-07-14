@@ -31,6 +31,7 @@ Route::post('store_student', [StudentController::class,'store'])->name('students
 Route::get('edit_student/{id}', [StudentController::class,'edit'])->name('students.edit');
 Route::post('update_student/{id}', [StudentController::class,'update'])->name('students.update');
 Route::post('delete_student/{id}', [StudentController::class,'destroy'])->name('students.delete');
+Route::post('search_student', [StudentController::class,'search'])->name('students.search');
 
 //Students training courses
 Route::get('training', [TrainingController::class,'index'])->name('trainings.index');

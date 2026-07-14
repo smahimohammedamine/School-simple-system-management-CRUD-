@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateStudentRequest;
+use Illuminate\Http\Request;
 use App\Models\Student;
 
 class StudentController extends Controller
@@ -58,6 +59,13 @@ class StudentController extends Controller
     public function destroy($id){
         Student::destroy($id);
         return redirect()->route('students.index')->with('success','Student deleted successfuly');
+    }
+
+    public function search(Request $request){
+        if($request->ajax()){
+            $data = Student::where('name', 'like', '%' . $request->name . '%')->get();
+            return view('students.table', ['data' => $data]);
+        }
     }
     
 

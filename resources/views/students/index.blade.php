@@ -23,7 +23,7 @@
             {{ session('success') }}
         </div>
     @endif
-    
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -34,7 +34,8 @@
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                            <input type="text" name="searchByName" id="searchByName" class="form-control float-right"
+                                placeholder="Search by name">
 
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -44,53 +45,22 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
-                    @if (isset($data) && count($data) > 0)
-                        <table id="example2" class="table table-bordered table-hover">
-
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Phone </th>
-                                    <th>Addresse</th>
-                                    <th>image</th>
-                                    <th>note</th>
-                                    <th>Status</th>
-                                    <th>action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $student)
-                                    <tr>
-                                        <td>{{ $student->id }}</td>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->phone }}</td>
-                                        <td>{{ $student->address }}</td>
-                                        <td><img src="{{ asset('uploads/'.$student->image) }}" alt="" srcset="" height="50px" width="50px"></td>
-                                        <td>{{ $student->notes }}</td>
-                                        <td><span class="tag tag-success">
-                                                @if ($student->active)
-                                                    Active
-                                                @else
-                                                    Inactive
-                                                @endif
-                                            </span></td>
-                                        
-                                        <td>
-                                            <a href=" {{ route('students.edit', $student->id) }} " class="btn btn-primary btn-sm">Edit</a>
-                                            <form action="{{ route('students.delete', $student->id) }}" method="POST" style="display:inline">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <p style="text-align: center; color:rgb(212, 21, 21);"> Data Not Found </p>
-                    @endif
-
-
-                    </tbody>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone </th>
+                                <th>Addresse</th>
+                                <th>image</th>
+                                <th>note</th>
+                                <th>Status</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            @include('students.table')
+                        </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -99,4 +69,31 @@
         </div>
     </div>
     <!-- /.row -->
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $(document).on('input', '#searchByName', function(e) {
+                var name = $(this).val();
+                $.ajax({
+                    url: '{{ route('students.search') }}',
+                    type: 'post',
+                    dataType: 'html',
+                    cache: false,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        name: name
+                    },
+                    success: function(data) {
+                        $('#studentsTableBody').html(data);
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            })
+        })
+
+    </script>
 @endsection
